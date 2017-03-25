@@ -1,12 +1,9 @@
 class Log < ActiveRecord::Base
 	belongs_to :character 
 
-	# def is_review
-	# 	self.character.logs.last == self
-	# end
+    scope :reviews, -> { where(is_review: true) } 
+    scope :lessons, -> { where(is_review: false) } 
 
-	# scope :reviews, all.select{ |log| log.is_review }
-	# scope :lessons, where(id: all.select{ |log| !log.is_review }.map(&:id))
 	def self.last_update
 		order("created_at").last.created_at
 	end
@@ -38,6 +35,7 @@ class Log < ActiveRecord::Base
 				end
 
 				create_new_log = false
+				create_new_character = false
 
 				character = characterClass.find_by_character_and_image(item['character'], item['image'])
 				if character.nil?
@@ -45,6 +43,7 @@ class Log < ActiveRecord::Base
 					characterItem.delete('user_specific')
 					character = characterClass.create(characterItem)
 					create_new_log = true
+					log['is_review'] = false
 					logger.debug '...................'
 					logger.debug 'loading new character:'
 					logger.debug item['character']
@@ -52,10 +51,7 @@ class Log < ActiveRecord::Base
 				end
 
 				oldLog = self.order('created_at DESC').find_by_character_id(character.id)
-				if oldLog.nil?
-					create_new_log = true
-					logger.debug "new item: #{item['character']}"
-				else
+				if !oldLog.nil?
 					oldLog.attributes = log
 					if oldLog.changed.count > 0
 						logger.debug "attr changed for #{oldLog.character}:"
@@ -65,7 +61,7 @@ class Log < ActiveRecord::Base
 				end
 				if create_new_log
 					logger.debug "create new log for #{item['character']}"	
-					log['character'] = 	character
+					log['character'] = character
 					logsToSave << log
 				end
 			end

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get 'main/index'
   resources :characters
 
-  get 'logs/generate' => 'logs#generate'
+  get 'logs/generate' => 'logs#generate', defaults: {format: :json}
   get 'desktop' => 'desktop#index'
   
   # The priority is based upon order of creation: first created -> highest priority.

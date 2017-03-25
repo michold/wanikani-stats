@@ -1,13 +1,9 @@
 %h1 Desktop
 %h2
-  Reviews and lessons done in last week:
-  +wykres lekcji vs review`!!!!
+  Amount of reviews and lessons completed:
 .chart
-  = line_chart @recentLogs.group_by_day(:created_at).count
-  / @recentLogs.map { |goal|
-  /     {name: goal.name, data: goal.feats.group_by_week(:created_at).count}
-  / }
+  = line_chart @logs_chart
 %h2
-  New characters learned in last weeks:
+  Amount of new characters learned:
 .chart
-  = line_chart @recentCharacters.group_by_day(:created_at).count
+  = line_chart @characters_chart

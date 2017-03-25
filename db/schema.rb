@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313201708) do
+ActiveRecord::Schema.define(version: 20170325181629) do
 
   create_table "characters", force: :cascade do |t|
     t.string   "character"
@@ -45,9 +45,10 @@ ActiveRecord::Schema.define(version: 20170313201708) do
     t.integer  "reading_incorrect"
     t.integer  "reading_max_streak"
     t.integer  "reading_current_streak"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.integer  "character_id"
+    t.boolean  "is_review",              default: true
     t.index ["character_id"], name: "index_logs_on_character_id"
   end
 
