@@ -1,0 +1,34 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Wanikani stats
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    %nav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to 'Brand', root_path, {:class => 'navbar-brand' }
+        #bs-navbar-collapse-1.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li{:class => ('active' if current_page?(desktop_path)) }
+              = link_to 'Desktop', desktop_path
+            %li{:class => ('active' if current_page?(characters_path)) }
+              = link_to 'Character list', characters_path
+    - if @breadcrumbs
+      .container
+        %ol.breadcrumb
+          - @breadcrumbs[0...-1].each do |txt, path|
+            %li.breadcrumb-item
+              = link_to(h(txt), path)
+          %li.breadcrumb-item.active
+            = h(@breadcrumbs.last.first)
+    .container
+      = yield

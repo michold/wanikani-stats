@@ -1,0 +1,25 @@
+.character-view
+  .col-md-6
+    %h2.character-jp
+      - if @character.character.nil?
+        %img.character-image{:src => "#{@character.image}"}/
+      - else
+      = @character.character
+  .col-md-6
+    %p
+      %strong Current level: 
+      = @character.current_log.srs
+    %p
+      %strong Meaning: 
+      = @character.meaning
+    %p
+      %strong Wanikani level: 
+      = @character.level
+    %p
+      %strong Type: 
+      = @character.type
+    %p
+      %strong Collected logs count: 
+      = @character.logs.count
+  %div
+    = line_chart @character.logs.group(:created_at).average(:srs_numeric)

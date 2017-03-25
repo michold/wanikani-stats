@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2017-03-10 00:24:45
+  level: 1
+  amount: 1
+
+two:
+  date: 2017-03-10 00:24:45
+  level: 1
+  amount: 1

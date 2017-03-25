@@ -1,0 +1,2 @@
+class Kanji < Character
+end

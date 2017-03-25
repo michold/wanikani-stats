@@ -1,0 +1,26 @@
+%h1 Characters list
+%table.table.table-striped.table-hover.character-list
+  %thead
+    %tr
+      %th character
+      %th meaning
+      %th type
+      %th level
+      %th logs
+      %th first occurrence
+      %th
+  %tbody
+    - @characters.each do |character|
+      %tr
+        %td.character-jp
+          - if character.character.nil?
+            %img.character-image{:src => "#{character.image}"}/
+          - else
+            = character.character
+        %td= character.meaning
+        %td= character.type
+        %td= character.current_log.srs
+        %td= character.logs.count
+        %td= character.created_at.strftime('%B %e at %l:%M %p')
+        %td= link_to 'Show', character_path(character)
+= will_paginate @characters, :renderer => BootstrapPagination::Rails

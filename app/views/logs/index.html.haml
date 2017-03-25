@@ -1,0 +1,19 @@
+%h1 Listing logs
+%table
+  %tr
+    %th created_at
+    %th character
+    %th srs
+    %th item_type
+  - @logs.each do |log|
+    %tr
+      %td= log.created_at
+      %td{:style => "font-family:\"Hiragino Kaku Gothic Pro\", \"Meiryo\", \"Source Han Sans Japanese\", \"NotoSansCJK\", \"TakaoPGothic\", \"Yu Gothic\", \"ヒラギノ角ゴ Pro W3\", \"メイリオ\", \"Osaka\", \"MS PGothic\", \"ＭＳ Ｐゴシック\", sans-serif"}
+        - if log.character.character.nil?
+          %img{:src => "#{log.character.image}", :style => "filter: invert(100%)"}/
+        - else
+          = log.character.character
+      %td= log.srs
+      %td= log.character.type
+      %td= link_to 'Show', log_path(log)
+= will_paginate @logs

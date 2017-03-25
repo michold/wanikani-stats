@@ -1,0 +1,2 @@
+class Radical < Character
+end
