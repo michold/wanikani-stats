@@ -1,2 +1,7 @@
 # wanikani-stats
-A rails application for managing WaniKani user statistics
+A rails application for managing WaniKani user statistics.  
+Setup requires:
+1. Adding personal WaniKani API key as WANIKANI_API_KEY env variable, for example `export WANIKANI_API_KEY="secret"`
+2. Running `whenever --update-crontab` to create an hourly cron task for generating new logs
+
+To run logs generation task manually, visit /logs/generate url.
