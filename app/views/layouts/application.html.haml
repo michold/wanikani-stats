@@ -18,10 +18,9 @@
           = link_to 'Brand', root_path, {:class => 'navbar-brand' }
         #bs-navbar-collapse-1.collapse.navbar-collapse
           %ul.nav.navbar-nav
-            %li{:class => ('active' if current_page?(desktop_path)) }
-              = link_to 'Desktop', desktop_path
-            %li{:class => ('active' if current_page?(characters_path)) }
-              = link_to 'Character list', characters_path
+            - @navbar.each do |menu_item|
+              %li{:class => ('active' if controller_name == menu_item[:controller_name]) }
+                = link_to menu_item[:name], menu_item[:path]
     - if @breadcrumbs
       .container
         %ol.breadcrumb
@@ -29,6 +28,6 @@
             %li.breadcrumb-item
               = link_to(h(txt), path)
           %li.breadcrumb-item.active
-            = h(@breadcrumbs.last.first)
+            = h(@breadcrumbs.last[0])
     .container
       = yield
