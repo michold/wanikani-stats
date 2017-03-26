@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170325181629) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "characters", force: :cascade do |t|
     t.string   "character"
     t.string   "important_reading"
@@ -49,7 +52,7 @@ ActiveRecord::Schema.define(version: 20170325181629) do
     t.datetime "updated_at",                            null: false
     t.integer  "character_id"
     t.boolean  "is_review",              default: true
-    t.index ["character_id"], name: "index_logs_on_character_id"
+    t.index ["character_id"], name: "index_logs_on_character_id", using: :btree
   end
 
 end

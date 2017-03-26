@@ -1,0 +1,23 @@
+{
+  "name": "Wanikani_stats",
+  "version": "1.0.0",
+  "description": "A rails application for managing WaniKani user statistics.",
+  "bugs": {
+    "url": "https://github.com/michold/wanikani-stats/issues"
+  },
+  "homepage": "https://github.com/michold/wanikani-stats#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michold/wanikani-stats.git"
+  },
+  "engine": {
+    "node": "4.6.x",
+    "npm": "2.11.x"
+  },
+  "dependencies": {
+    "bower": "^1.8.0"
+  },
+  "scripts": {
+    "postinstall": "./node_modules/bower/bin/bower install"
+  }
+}
