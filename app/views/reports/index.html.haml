@@ -1,6 +1,6 @@
 .row
   - @reports.each do |report|
-    .col-md-6
+    .col-sm-6
       = link_to({:controller => :reports, :action => report[:action]}, {:class => 'block well'}) do
         %h2 
           = report[:name]

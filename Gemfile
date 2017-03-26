@@ -63,3 +63,10 @@ gem 'will_paginate-bootstrap'
 gem 'whenever', :require => false
 gem "chartkick"
 gem "groupdate"
+
+
+gem 'pg'
+gem 'taps'
+
+gem 'rails_12factor', group: :production
+ruby "2.4.0"

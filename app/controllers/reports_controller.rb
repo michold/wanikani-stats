@@ -6,11 +6,11 @@ class ReportsController < ApplicationController
 		@reports = [
 			{
 				:name => 'Reviews and lessons completed',
-				:action => :characters_by_time,
+				:action => :logs_by_time,
 			},
 			{
 				:name => 'Characters learned',
-				:action => :logs_by_time,
+				:action => :characters_by_time,
 			}
 		]
 	end
