@@ -1,0 +1,5 @@
+.row.toolbar-row
+  .col-xs-12
+    = form_tag '', :method => :get, :class => 'form-inline', :defaults => {} do
+      = text_field_tag :daterange, @daterange, :class => 'form-control', 'data-daterange' => true, 'data-autosubmit' => true
+      / = submit_tag 'Filter', name: nil

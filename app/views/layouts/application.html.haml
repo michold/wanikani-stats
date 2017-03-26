@@ -4,10 +4,10 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Wanikani stats
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
+    = javascript_include_tag 'application_head', 'data-turbolinks-track' => true
   %body
-    %nav.navbar.navbar-default
+    %nav.navbar.navbar-default.navbar-fixed-top
       .container-fluid
         .navbar-header
           %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
@@ -21,13 +21,15 @@
             - @navbar.each do |menu_item|
               %li{:class => ('active' if controller_name == menu_item[:controller_name]) }
                 = link_to menu_item[:name], menu_item[:path]
-    - if @breadcrumbs
-      .container
-        %ol.breadcrumb
-          - @breadcrumbs[0...-1].each do |txt, path|
-            %li.breadcrumb-item
-              = link_to(h(txt), path)
-          %li.breadcrumb-item.active
-            = h(@breadcrumbs.last[0])
-    .container
-      = yield
+    #wrapper
+      .container-fluid
+        - if @breadcrumbs
+          .row.breadcrumb-row
+            %ol.breadcrumb
+              - @breadcrumbs[0...-1].each do |txt, path|
+                %li.breadcrumb-item
+                  = link_to(h(txt), path)
+              %li.breadcrumb-item.active
+                = h(@breadcrumbs.last[0])
+        = yield
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true

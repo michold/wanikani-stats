@@ -6,7 +6,7 @@ class CharactersController < ApplicationController
 	end
 	def show
 		@character = Character.find(params[:id])
-		add_breadcrumb @character.character, "character_path(#{@character.id})"
+		add_breadcrumb @character.character, "character_path(@character.id)"
 	end
 
 	def new

@@ -1,0 +1,14 @@
+#wrapper {
+	padding-top: 50px;
+}
+.block {
+	display: block;
+}
+.toolbar-row {
+	border-bottom: 1px #e7e7e7 solid;
+	padding: 15px 0px;
+	margin-bottom: 15px;
+}
+.breadcrumb-row + .toolbar-row{
+	margin-top: -15px;
+}
