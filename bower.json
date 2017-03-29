@@ -13,6 +13,7 @@
   ],
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "bootstrap-daterangepicker": "^2.1.25"
+    "bootstrap-daterangepicker": "^2.1.25",
+    "components-font-awesome": "^4.7.0"
   }
 }

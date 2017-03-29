@@ -1,3 +1,19 @@
 // Place all the styles related to the desktop controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.user-avatar, .user-info {
+	float: left;
+	padding: 0px 15px;
+}
+.user-avatar {
+	width: 160px;
+	img {
+		border-radius: 50%;
+		max-width: 100%;
+	}
+}
+.user-info {
+	.username {
+		margin-top: 0px;
+	}
+}

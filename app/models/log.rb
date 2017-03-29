@@ -8,6 +8,8 @@ class Log < ActiveRecord::Base
 		order("created_at").last.created_at
 	end
 	def self.load_new_logs
+		# TODO: make wanikani api requests to a separate service
+		# TODO: reduce amount of queries
 		apiKey = ENV['WANIKANI_API_KEY']
 		@req = []
 		blacklist = ['user_synonyms']

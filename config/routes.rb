@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :characters
 
   get 'logs/generate' => 'logs#generate', defaults: {format: :json}
+  get 'users/update' => 'users#update', defaults: {format: :json}
 
   get 'desktop' => 'desktop#index'
 

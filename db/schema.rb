@@ -10,22 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170325181629) do
+ActiveRecord::Schema.define(version: 20170329201618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "characters", force: :cascade do |t|
-    t.string   "character"
-    t.string   "important_reading"
+    t.text     "character"
+    t.text     "important_reading"
     t.integer  "level"
-    t.string   "kunyomi"
-    t.string   "nanori"
-    t.string   "onyomi"
-    t.string   "meaning"
-    t.string   "kana"
-    t.string   "image"
-    t.string   "type"
+    t.text     "kunyomi"
+    t.text     "nanori"
+    t.text     "onyomi"
+    t.text     "meaning"
+    t.text     "kana"
+    t.text     "image"
+    t.text     "type"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20170325181629) do
     t.datetime "unlocked_date"
     t.text     "meaning_note"
     t.text     "reading_note"
-    t.string   "srs"
+    t.text     "srs"
     t.integer  "srs_numeric"
     t.datetime "available_date"
     t.boolean  "burned"
@@ -53,6 +53,20 @@ ActiveRecord::Schema.define(version: 20170325181629) do
     t.integer  "character_id"
     t.boolean  "is_review",              default: true
     t.index ["character_id"], name: "index_logs_on_character_id", using: :btree
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "username"
+    t.string   "gravatar"
+    t.integer  "level"
+    t.string   "title"
+    t.datetime "creation_date"
+    t.integer  "radicals_progress"
+    t.integer  "radicals_total"
+    t.integer  "kanji_progress"
+    t.integer  "kanji_total"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
 end

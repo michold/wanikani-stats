@@ -1,20 +1,26 @@
-%h1 Desktop
-
 .row
-  .col-xs-12
-    %strong user level: 
-    = @user_level
-
-.row
-  .col-xs-12
-    %strong last new log:
-    = @last_update.strftime('%B %e at %l:%M %p')
-
+  .user-avatar.hidden-xs
+    %img{src: "https://www.gravatar.com/avatar/#{@user['gravatar']}.jpg?s=300&d=https://cdn.wanikani.com/default-avatar-300x300-20121121.png"}/
+  .user-info
+    .pull-right
+      %button.btn.btn-default{'data-ajax-refresh' => true, 'data-url' => users_update_path}
+        %i{class: "fa fa-refresh"}
+    %h2.username 
+      = @user['username']
+    %h4 
+      title:
+      = @user['title']
+    %h4 
+      level: 
+      = @user['level']
+    %h4 
+      last new log:
+      = @last_update.strftime('%B %e at %l:%M %p')
 %hr
 .row
   .col-xs-12
     %h2 current level progress:
     %h3 Radicals:
-    - progress_bar(@progress['radicals_percent'], [@progress['radicals_progress'], @progress['radicals_total']])
+    - progress_bar(@progress['radicals_percent'], [@user['radicals_progress'], @user['radicals_total']])
     %h3 Kanji:
-    - progress_bar(@progress['kanji_percent'], [@progress['kanji_progress'], @progress['kanji_total']])
+    - progress_bar(@progress['kanji_percent'], [@user['kanji_progress'], @user['kanji_total']])

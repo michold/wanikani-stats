@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  username: MyString
+  gravatar: 
+  level: 
+  title: 
+  creation_date: 
+  radicals_progress: 
+  radicals_total: 
+  kanji_progress: 
+  kanji_total: 1
+
+two:
+  username: MyString
+  gravatar: 
+  level: 
+  title: 
+  creation_date: 
+  radicals_progress: 
+  radicals_total: 
+  kanji_progress: 
+  kanji_total: 1

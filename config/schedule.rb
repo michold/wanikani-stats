@@ -3,6 +3,7 @@ set :environment, :development
 
 every 1.hours do
   runner "Log.load_new_logs"
+  runner "User.update_attributes"
 end
 
 # Use this file to easily define all of your cron jobs.
