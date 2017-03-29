@@ -1,1 +1,20 @@
 %h1 Desktop
+
+.row
+  .col-xs-12
+    %strong user level: 
+    = @user_level
+
+.row
+  .col-xs-12
+    %strong last new log:
+    = @last_update.strftime('%B %e at %l:%M %p')
+
+%hr
+.row
+  .col-xs-12
+    %h2 current level progress:
+    %h3 Radicals:
+    - progress_bar(@progress['radicals_percent'], [@progress['radicals_progress'], @progress['radicals_total']])
+    %h3 Kanji:
+    - progress_bar(@progress['kanji_percent'], [@progress['kanji_progress'], @progress['kanji_total']])

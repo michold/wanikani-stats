@@ -12,3 +12,17 @@
 .breadcrumb-row + .toolbar-row{
 	margin-top: -15px;
 }
+.progress-labels {
+	width: 100%;
+	height: 10px;
+	.progress-label-left,
+	.progress-label-right {
+		margin-top:-20px;
+	}
+	.progress-label-left {
+		float: left;
+	}
+	.progress-label-right {
+		float: right;
+	}
+}

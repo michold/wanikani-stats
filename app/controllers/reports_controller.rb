@@ -46,7 +46,7 @@ class ReportsController < ApplicationController
 
 		else
 			@daterange = nil
-			@time_options[:range] = 7.days.ago..Time.now
+			@time_options[:range] = 7.days.ago.beginning_of_day..Time.now
 		end
 		@filters
 	end

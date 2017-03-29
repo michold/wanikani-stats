@@ -1,15 +1,16 @@
 class DesktopController < ApplicationController
 	add_breadcrumb 'Desktop', 'desktop_path'
 	def index
-		@logs_chart = [
-	    {
-	      name: "reviews", data: Log.reviews.group_by_day(:created_at, last: 8).count
-	    }, {
-	      name: "lessons", data: Log.lessons.group_by_day(:created_at, last: 8).count
-	    }, {
-	      name: "sum", data: Log.group_by_day(:created_at, last: 8).count
-	    }
-		]
-		@characters_chart = Character.group_by_day(:created_at, last: 12).count
+		@user_level = Character.order(level: :desc).first[:level] - 1
+		@last_update = Log.order(created_at: :desc).first[:created_at]
+
+		# TODO: move api request to a separate service
+		# TODO: store user info as an entity
+		apiKey = ENV['WANIKANI_API_KEY']
+		response = RestClient.get("https://www.wanikani.com/api/user/#{apiKey}/level-progression/")
+		@progress = (JSON.parse response.body)['requested_information']
+		%w(radicals kanji).each do |type|
+			@progress["#{type}_percent"] = @progress["#{type}_progress"].to_f / @progress["#{type}_total"].to_f
+		end
 	end
 end
