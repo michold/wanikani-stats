@@ -4,7 +4,6 @@ ajaxRefresh = do ->
 			$this = $(this)
 			url = $this.data('url')
 			$icon = $this.find('.glyphicon')
-			console.log($icon)
 			$this.on('click', ->
 				$icon.addClass("glyphicon-spin")
 				$.ajax(

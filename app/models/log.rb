@@ -5,18 +5,18 @@ class Log < ActiveRecord::Base
     scope :lessons, -> { where(is_review: false) } 
 
 	def self.last_update
-		order("created_at").last.created_at
+		order(:created_at).last.created_at
 	end
 	def self.load_new_logs
-		# TODO: make wanikani api requests to a separate service
-		# TODO: reduce amount of queries
-		apiKey = ENV['WANIKANI_API_KEY']
-		@req = []
+		# TODO: make the api calls async
 		blacklist = ['user_synonyms']
+		wanikaniApi = WanikaniApi.new
+		characters = Character.all
+		# apparently running a query for each find is faster than .find{|x| x == y} on a loaded collection
+		# logs = Log.order('created_at DESC')
 		{'radicals' => Radical, 'kanji' => Kanji, 'vocabulary' => Vocabulary}.each do |type, characterClass|
 			logsToSave = []
-			response = RestClient.get("https://www.wanikani.com/api/user/#{apiKey}/#{type}/")
-			items = (JSON.parse response.body)['requested_information']
+			items = wanikaniApi.get(type)['requested_information']
 			if type == 'vocabulary'
 				items = items['general']
 			end
@@ -40,6 +40,7 @@ class Log < ActiveRecord::Base
 				create_new_character = false
 
 				character = characterClass.find_by_character_and_image(item['character'], item['image'])
+				# character = characters.find{|x| x[:type] == characterClass && x[:character] == item['character'] && x[:image] == item['image']}
 				if character.nil?
 					characterItem = item.clone
 					characterItem.delete('user_specific')
@@ -53,6 +54,7 @@ class Log < ActiveRecord::Base
 				end
 
 				oldLog = self.order('created_at DESC').find_by_character_id(character.id)
+				# oldLog = logs.find{|x| x[:character_id] == character.id}
 				if !oldLog.nil?
 					oldLog.attributes = log
 					if oldLog.changed.count > 0
@@ -68,7 +70,7 @@ class Log < ActiveRecord::Base
 				end
 			end
 			logger.debug "All #{type} logs are up to date." if logsToSave.empty?
-			self.create(logsToSave)
+			create(logsToSave)
 		end
 	end
 end
