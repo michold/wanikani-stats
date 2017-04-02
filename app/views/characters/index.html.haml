@@ -24,6 +24,6 @@
         %td= character.type
         %td= character.logs.last.srs
         %td= character.logs.size
-        %td= character.created_at.strftime(Rails.application.config.date_format_long)
+        %td= character.created_at.strftime(Rails.application.config.date_time_format_long)
         %td= link_to 'Show', character_path(character)
 = will_paginate @characters, :renderer => BootstrapPagination::Rails

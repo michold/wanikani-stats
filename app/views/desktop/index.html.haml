@@ -15,15 +15,12 @@
       = @user['level']
     %h4 
       last new log:
-      = @last_update.strftime(Rails.application.config.date_format_long)
-    %h4 
-      next lesson:
-      = @last_update.strftime(Rails.application.config.date_format_long)
+      = @last_update.strftime(Rails.application.config.date_time_format_long)
 %hr
 .row
   .col-xs-12
     %h2 current level progress:
     %h3 Radicals:
-    - progress_bar(@progress['radicals_percent'], [@user['radicals_progress'], @user['radicals_total']])
+    - progress_bar(@progress['radicals_percent'], [0, @user['radicals_total']])
     %h3 Kanji:
-    - progress_bar(@progress['kanji_percent'], [@user['kanji_progress'], @user['kanji_total']])
+    - progress_bar(@progress['kanji_percent'], [0, @user['kanji_total']])

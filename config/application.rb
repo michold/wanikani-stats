@@ -27,6 +27,7 @@ module Wanikani
     config.assets.initialize_on_precompile = false
 
     config.date_format_short =  "%d.%m.%Y"
-    config.date_format_long = "%B %e at %l:%M %p"
+    config.date_format_long = "%B %e, %A"
+    config.date_time_format_long = "%B %e at %l:%M %p"
   end
 end

@@ -12,10 +12,10 @@ class ReportsController < ApplicationController
 				:name => 'Characters learned',
 				:action => :characters_by_time,
 			},
-			{
-				:name => 'Character level changes',
-				:action => :character_level_changes,
-			},
+			# {
+			# 	:name => 'Character level changes',
+			# 	:action => :character_level_changes,
+			# },
 			{
 				:name => 'Correct answers percentage',
 				:action => :correct_answers_percentage,
@@ -35,6 +35,7 @@ class ReportsController < ApplicationController
 		      name: "sum", data: filtered_logs.count
 		    }
 		]
+		logger.debug @chart
 	end
 
 	def characters_by_time
@@ -46,6 +47,14 @@ class ReportsController < ApplicationController
 
 	def character_level_changes
 		add_breadcrumb 'Character level changes', "reports_character_level_changes_path"
+		# @chart = [
+		# 	{
+		# 		name: "a => l", data: {"March 26, Sunday"=>90, "March 27, Monday"=>50, "March 28, Tuesday"=>50, "March 29, Wednesday"=>50, "March 30, Thursday"=>50, "March 31, Friday"=>50, "April  1, Saturday"=>50, "April  2, Sunday"=>50}
+		# 	}, {
+		# 		name: "a => g", data: {"March 26, Sunday"=>10, "March 27, Monday"=>50, "March 28, Tuesday"=>50, "March 29, Wednesday"=>50, "March 30, Thursday"=>50, "March 31, Friday"=>50, "April  1, Saturday"=>50, "April  2, Sunday"=>50}
+		# 	}
+
+		# ]
 	end
 
 	def correct_answers_percentage
@@ -63,11 +72,10 @@ class ReportsController < ApplicationController
 	def get_filters
 		@filters = []
 		@time_options = {
-			# format: Rails.application.config.date_format_long
-			# todo: date format - no time
+			format: Rails.application.config.date_format_long
 		}
 		if params.has_key?(:daterange)
-			@daterange = params[:daterange]
+			daterange = params[:daterange]
 			range = params[:daterange].split(" - ")
 			date_format = Rails.application.config.date_format_short
 			start_date = Date.strptime(range[0], date_format)
@@ -75,7 +83,6 @@ class ReportsController < ApplicationController
 			@time_options[:range] = start_date..end_date 
 
 		else
-			@daterange = nil
 			@time_options[:range] = 7.days.ago.beginning_of_day..Time.now
 		end
 		@filters
