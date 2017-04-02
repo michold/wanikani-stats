@@ -21,5 +21,6 @@
     %p
       %strong Collected logs count: 
       = @character.logs.count
-  %div
-    = line_chart @character.logs.group(:created_at).average(:srs_numeric)
+  -if @character.logs.count > 1
+    %div
+      = line_chart @character.logs.group(:created_at).average(:srs_numeric)

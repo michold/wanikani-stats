@@ -26,6 +26,12 @@
 		float: right;
 	}
 }
+.character-jp {
+	font-family: 'Hiragino Kaku Gothic Pro', 'Meiryo', 'Source Han Sans Japanese', 'NotoSansCJK', 'TakaoPGothic', 'Yu Gothic', 'ヒラギノ角ゴ Pro W3', 'メイリオ', 'Osaka', 'MS PGothic', 'ＭＳ Ｐゴシック', sans-serif;
+	img {
+		filter: invert(100%);
+	}
+}
 .glyphicon-spin {
     -webkit-animation: spin 1000ms infinite linear;
     animation: spin 1000ms infinite linear;

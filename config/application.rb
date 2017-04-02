@@ -25,5 +25,8 @@ module Wanikani
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
     config.assets.precompile << 'application_head.js'
     config.assets.initialize_on_precompile = false
+
+    config.date_format_short =  "%d.%m.%Y"
+    config.date_format_long = "%B %e at %l:%M %p"
   end
 end

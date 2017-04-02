@@ -8,7 +8,7 @@
   - @logs.each do |log|
     %tr
       %td= log.created_at
-      %td{:style => "font-family:\"Hiragino Kaku Gothic Pro\", \"Meiryo\", \"Source Han Sans Japanese\", \"NotoSansCJK\", \"TakaoPGothic\", \"Yu Gothic\", \"ヒラギノ角ゴ Pro W3\", \"メイリオ\", \"Osaka\", \"MS PGothic\", \"ＭＳ Ｐゴシック\", sans-serif"}
+      %td.character-jp
         - if log.character.character.nil?
           %img{:src => "#{log.character.image}", :style => "filter: invert(100%)"}/
         - else

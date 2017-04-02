@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get 'reports' => 'reports#index'
   get 'reports/characters_by_time' => 'reports#characters_by_time'
   get 'reports/logs_by_time' => 'reports#logs_by_time'
+  get 'reports/character_level_changes' => 'reports#character_level_changes'
+  get 'reports/correct_answers_percentage' => 'reports#correct_answers_percentage'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

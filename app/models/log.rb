@@ -1,19 +1,46 @@
 class Log < ActiveRecord::Base
 	belongs_to :character 
 
-    scope :reviews, -> { where(is_review: true) } 
-    scope :lessons, -> { where(is_review: false) } 
+  scope :reviews, -> { where(is_review: true) } 
+  scope :lessons, -> { where(is_review: false) } 
 
 	def self.last_update
 		order(:created_at).last.created_at
+	end
+	def self.last_character_logs
+		# nestedQuery = self.select('MAX(created_at) as max_ca, character_id as char_id').group(:character_id)
+		# self.all.joins(nestedQuery).where("max_ca" => :created_at, "char_id" => :character_id)
+		self.joins("INNER JOIN (SELECT character_id, MAX(created_at) as max_ca FROM logs GROUP BY character_id) as distinct_logs ON logs.character_id = distinct_logs.character_id AND logs.created_at = distinct_logs.max_ca")
+	end
+	def prev_log
+		Log.where({:character => self.character_id}).where("created_at < ?", self.created_at).order(:created_at => :desc).first
+	end
+	def correct
+		prev = self.prev_log
+		prev.nil? ? nil : prev[:srs_numeric] <= self[:srs_numeric]
+	end
+	def self.get_correct_percentage(logs)
+		correct_count = 0
+		new_item_count = 0
+		logs.each do |log|
+			correct = log.correct
+			if correct.nil?
+				new_item_count += 1
+			elsif correct
+				correct_count += 1
+			end
+		end
+		logs_count = logs.count - new_item_count
+
+		(correct_count.to_f / logs_count * 100).round(2)
 	end
 	def self.load_new_logs
 		# TODO: make the api calls async
 		blacklist = ['user_synonyms']
 		wanikaniApi = WanikaniApi.new
-		characters = Character.all
 		# apparently running a query for each find is faster than .find{|x| x == y} on a loaded collection
-		# logs = Log.order('created_at DESC')
+		# characters = Character.all
+		# logs = last_character_logs
 		{'radicals' => Radical, 'kanji' => Kanji, 'vocabulary' => Vocabulary}.each do |type, characterClass|
 			logsToSave = []
 			items = wanikaniApi.get(type)['requested_information']
@@ -40,7 +67,7 @@ class Log < ActiveRecord::Base
 				create_new_character = false
 
 				character = characterClass.find_by_character_and_image(item['character'], item['image'])
-				# character = characters.find{|x| x[:type] == characterClass && x[:character] == item['character'] && x[:image] == item['image']}
+				# character = characters.find{|x| x[:type] == characterClass.name && x[:character] == item['character'] && x[:image] == item['image']}
 				if character.nil?
 					characterItem = item.clone
 					characterItem.delete('user_specific')

@@ -3,7 +3,7 @@ module ApplicationHelper
 	  haml_tag :div, :class => "progress" do
 		  haml_tag :div, :class => "progress-bar", style: "width:#{percent}%;", 'aria-valuenow' => percent do
 		    if percent > 0
-		      haml_concat percent
+		      haml_concat "#{percent.round(2)}%"
 		    end
 		  end
     end

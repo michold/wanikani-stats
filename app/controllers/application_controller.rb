@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_filter :get_navbar
+  before_action :get_navbar
 
   def get_navbar
     @navbar = [
@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     end
    
     def self.add_breadcrumb name, url, options = {}
-      before_filter options do |controller|
+      before_action options do |controller|
         controller.send(:add_breadcrumb, name, url)
       end
     end
