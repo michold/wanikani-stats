@@ -7,8 +7,12 @@ class WanikaniApi
   end
   
   def get(url)
-    response = RestClient.get("https://www.wanikani.com/api/user/#{@api_key}/#{url}/")
+    response = RestClient.get(get_url(url))
     JSON.parse response.body
+  end
+  
+  def get_url(url)
+    "https://www.wanikani.com/api/user/#{@api_key}/#{url}/"
   end
 
 end
