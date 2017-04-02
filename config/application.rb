@@ -24,6 +24,11 @@ module Wanikani
     config.active_record.raise_in_transactional_callbacks = true
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
     config.assets.precompile << 'application_head.js'
+    config.assets.precompile << Proc.new { |path|
+      if path =~ /\.(eot|svg|ttf|woff|otf)\z/
+        true
+      end
+    }
     config.assets.initialize_on_precompile = false
 
     config.date_format_short =  "%d.%m.%Y"
