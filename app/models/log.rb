@@ -47,7 +47,7 @@ class Log < ActiveRecord::Base
 
 		EventMachine.run do
 		  urls.each do |type, characterClass|
-		    http = EventMachine::HttpRequest.new(wanikaniApi.get_url(type)).get
+		  	http = EventMachine::HttpRequest.new(wanikaniApi.get_url(type), :connect_timeout => 325).get
 		    http.callback {
 	    		logsToSave = []
 	    		items = (JSON.parse http.response)['requested_information']

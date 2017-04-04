@@ -1,5 +1,5 @@
 class Character < ActiveRecord::Base 
-    has_many :logs 
+    has_many :logs, :dependent => :destroy
     self.inheritance_column = :type 
 
     def self.types
