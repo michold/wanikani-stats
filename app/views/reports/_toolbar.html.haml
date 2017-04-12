@@ -1,5 +1,9 @@
 .row.toolbar-row
   .col-xs-12
     = form_tag '', :method => :get, :class => 'form-inline', :defaults => {} do
-      = text_field_tag :daterange, @daterange, :class => 'form-control', 'data-daterange' => true, 'data-autosubmit' => true
-      / = submit_tag 'Filter', name: nil
+      .form-group
+        = text_field_tag :daterange, @daterange, :class => 'form-control', 'data-daterange' => true
+      .form-group
+        = select_tag :character_types, options_for_select(@character_types, selected: @selected_character_types), :class => 'form-control selectpicker', :multiple => true
+      .form-group
+        = submit_tag 'Filter', name: nil, :class => 'btn btn-default'

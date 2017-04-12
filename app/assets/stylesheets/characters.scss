@@ -13,4 +13,33 @@
 			height: 15px;
 		}
 	}
+	.marker {
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		display: inline-block;
+		&.radical {
+			background-color: $radical-color;
+		}
+		&.kanji {
+			background-color: $kanji-color;
+		}
+		&.vocabulary {
+			background-color: $vocabulary-color;
+		}
+	}
+	// tr.radical {
+	// 	&:nth-child(odd), &:hover {	
+	// 	}
+	// }
+	// tr.kanji {
+	// 	&:nth-child(odd), &:hover {	
+	// 		background-color: #ffb9df;
+	// 	}
+	// }
+	// tr.vocabulary {
+	// 	&:nth-child(odd), &:hover {	
+	// 	background-color: #f5cfff;
+	// 	}
+	// }
 }

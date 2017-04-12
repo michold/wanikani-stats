@@ -2,7 +2,7 @@
   %button.btn.btn-default{'data-ajax-refresh' => true, 'data-url' => logs_generate_path}
     %i{class: "glyphicon glyphicon-refresh"}
 %h1 Characters list
-%table.table.table-striped.table-hover.character-list
+%table.table.table-hover.character-list
   %thead
     %tr
       %th character
@@ -14,14 +14,16 @@
       %th
   %tbody
     - @characters.each do |character|
-      %tr
+      %tr{:class => character.type.downcase}
         %td.character-jp
           - if character.character.nil?
             %img.character-image{:src => "#{character.image}"}/
           - else
             = character.character
         %td= character.meaning
-        %td= character.type
+        %td
+          .marker{class: character.type.downcase}
+          = character.type
         %td= character.logs.last.srs
         %td= character.logs.size
         %td= character.created_at.strftime(Rails.application.config.date_time_format_long)

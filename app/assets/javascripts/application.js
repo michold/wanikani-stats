@@ -16,4 +16,5 @@
 //= require bootstrap/dist/js/bootstrap
 //= require moment
 //= require bootstrap-daterangepicker
+//= require bootstrap-select
 //= require_tree .

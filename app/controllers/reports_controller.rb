@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
 	add_breadcrumb 'Reports', 'reports_path'
-	before_filter :get_filters, :except => [:index]
+	before_action :get_filters, :except => [:index]
 
 	def index
 		@reports = [
@@ -70,12 +70,12 @@ class ReportsController < ApplicationController
 	private
 
 	def get_filters
-		@filters = []
+		@filters = {}
 		@time_options = {
 			format: Rails.application.config.date_format_long
 		}
 		if params.has_key?(:daterange)
-			daterange = params[:daterange]
+			@daterange = params[:daterange]
 			range = params[:daterange].split(" - ")
 			date_format = Rails.application.config.date_format_short
 			start_date = Date.strptime(range[0], date_format)
@@ -85,14 +85,21 @@ class ReportsController < ApplicationController
 		else
 			@time_options[:range] = 7.days.ago.beginning_of_day..Time.now
 		end
+
+		if params.has_key?(:character_types)
+			@selected_character_types = params[:character_types]
+			@filters[:character_types] = @selected_character_types
+		end
+		@character_types = Character.types
 		@filters
 	end
 
 	def filter (records)
 		@filters.each do |key, val|
-			# case key
-				records = records.where(key, val)
-			# end
+			case key
+				when :character_types
+					records = records.where(:type => val)
+			end
 		end
 		records
 	end
