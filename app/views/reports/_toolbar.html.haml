@@ -4,6 +4,6 @@
       .form-group
         = text_field_tag :daterange, @daterange, :class => 'form-control', 'data-daterange' => true
       .form-group
-        = select_tag :character_types, options_for_select(@character_types, selected: @selected_character_types), :class => 'form-control selectpicker', :multiple => true
+        = render 'shared/filters/character_types'
       .form-group
         = submit_tag 'Filter', name: nil, :class => 'btn btn-default'

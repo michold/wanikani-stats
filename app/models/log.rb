@@ -8,9 +8,14 @@ class Log < ActiveRecord::Base
 		order(:created_at).last.created_at
 	end
 	def self.last_character_logs
-		# nestedQuery = self.select('MAX(created_at) as max_ca, character_id as char_id').group(:character_id)
-		# self.all.joins(nestedQuery).where("max_ca" => :created_at, "char_id" => :character_id)
-		self.joins("INNER JOIN (SELECT character_id, MAX(created_at) as max_ca FROM logs GROUP BY character_id) as distinct_logs ON logs.character_id = distinct_logs.character_id AND logs.created_at = distinct_logs.max_ca")
+		self.joins("
+			INNER JOIN (
+				SELECT character_id, MAX(created_at) as max_ca 
+				FROM logs 
+				GROUP BY character_id
+			) as distinct_logs 
+			ON logs.character_id = distinct_logs.character_id AND logs.created_at = distinct_logs.max_ca
+			")
 	end
 	def prev_log
 		Log.where({:character => self.character_id}).where("created_at < ?", self.created_at).order(:created_at => :desc).first
@@ -38,8 +43,6 @@ class Log < ActiveRecord::Base
 		blacklist = ['user_synonyms']
 		wanikaniApi = WanikaniApi.new
 		# apparently running a query for each find is faster than .find{|x| x == y} on a loaded collection
-		# characters = Character.all
-		# logs = last_character_logs
 
 		urls = {'radicals' => Radical, 'kanji' => Kanji, 'vocabulary' => Vocabulary}
 
@@ -71,10 +74,8 @@ class Log < ActiveRecord::Base
 	    			end
 
 	    			create_new_log = false
-	    			create_new_character = false
 
 	    			character = characterClass.find_by_character_and_image(item['character'], item['image'])
-	    			# character = characters.find{|x| x[:type] == characterClass.name && x[:character] == item['character'] && x[:image] == item['image']}
 	    			if character.nil?
 	    				characterItem = item.clone
 	    				characterItem.delete('user_specific')
@@ -88,7 +89,6 @@ class Log < ActiveRecord::Base
 	    			end
 
 	    			oldLog = self.order('created_at DESC').find_by_character_id(character.id)
-	    			# oldLog = logs.find{|x| x[:character_id] == character.id}
 	    			if !oldLog.nil?
 	    				oldLog.attributes = log
 	    				if oldLog.changed.count > 0

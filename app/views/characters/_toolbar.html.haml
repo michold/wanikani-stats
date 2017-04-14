@@ -1,0 +1,10 @@
+.row.toolbar-row
+  .col-xs-12
+    = form_tag '', :method => :get, :class => 'form-inline', :defaults => {} do
+      .form-group
+        = render 'shared/filters/character_types'
+      .form-group
+        = submit_tag 'Filter', name: nil, :class => 'btn btn-default'
+      .form-group.pull-right
+        %button.btn.btn-default{'data-ajax-refresh' => true, 'data-url' => logs_generate_path, 'type' => 'button'}
+          %i{class: "glyphicon glyphicon-refresh"}

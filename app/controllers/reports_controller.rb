@@ -25,7 +25,7 @@ class ReportsController < ApplicationController
 
 	def logs_by_time
 		add_breadcrumb 'Reviews and lessons completed', "reports_logs_by_time_path"
-		filtered_logs = filter(Log).group_by_day(:created_at, @time_options)
+		filtered_logs = filter(Log.includes(:character)).group_by_day("logs.created_at", @time_options)
 		@chart = [
 		    {
 		      name: "reviews", data: filtered_logs.reviews.count
@@ -35,14 +35,12 @@ class ReportsController < ApplicationController
 		      name: "sum", data: filtered_logs.count
 		    }
 		]
-		logger.debug @chart
 	end
 
 	def characters_by_time
 		add_breadcrumb 'Characters learned', "reports_characters_by_time_path"
 		filtered_characters = filter(Character)
 		@chart = filtered_characters.group_by_day(:created_at, @time_options).count
-		logger.debug @chart
 	end
 
 	def character_level_changes
@@ -59,7 +57,7 @@ class ReportsController < ApplicationController
 
 	def correct_answers_percentage
 		add_breadcrumb 'Correct answers percentage', "reports_correct_answers_percentage_path"
-		filtered_logs = filter(Log).all.group_by_day(@time_options, &:created_at)
+		filtered_logs = filter(Log.joins(:character)).all.group_by_day(@time_options, &:created_at)
 
 		@chart = {}
 		filtered_logs.each do |day, logs|
@@ -90,7 +88,6 @@ class ReportsController < ApplicationController
 			@selected_character_types = params[:character_types]
 			@filters[:character_types] = @selected_character_types
 		end
-		@character_types = Character.types
 		@filters
 	end
 
@@ -98,7 +95,11 @@ class ReportsController < ApplicationController
 		@filters.each do |key, val|
 			case key
 				when :character_types
-					records = records.where(:type => val)
+					if records.name == 'Log'
+						records = records.where(:characters => {:type => val})
+					elsif records.name == 'Character'
+						records = records.where(:type => val)
+					end
 			end
 		end
 		records
