@@ -56,6 +56,7 @@ class ReportsController < ApplicationController
 	end
 
 	def correct_answers_percentage
+		# TODO: fix n+1 loading
 		add_breadcrumb 'Correct answers percentage', "reports_correct_answers_percentage_path"
 		filtered_logs = filter(Log.joins(:character)).all.group_by_day(@time_options, &:created_at)
 

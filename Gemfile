@@ -64,6 +64,7 @@ gem 'whenever', :require => false
 gem "chartkick"
 gem "groupdate"
 gem "em-http-request"
+gem 'ransack'
 
 gem 'rails_12factor', group: :production
 ruby "2.4.0"

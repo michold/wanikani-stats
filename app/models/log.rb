@@ -1,5 +1,5 @@
 class Log < ActiveRecord::Base
-	belongs_to :character 
+	belongs_to :character, :counter_cache => true
 
   scope :reviews, -> { where(is_review: true) } 
   scope :lessons, -> { where(is_review: false) } 

@@ -32,6 +32,9 @@
 		filter: invert(100%);
 	}
 }
+[data-click] {
+	cursor: pointer;
+}
 .glyphicon-spin {
     -webkit-animation: spin 1000ms infinite linear;
     animation: spin 1000ms infinite linear;

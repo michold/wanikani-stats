@@ -2,12 +2,8 @@ class CharactersController < ApplicationController
 	add_breadcrumb 'Characters', 'characters_path'
 	  
 	def index
-	   @characters = Character.paginate(:page => params[:page]).includes(:logs)
-	   if params.has_key?(:character_types)
-	   	@selected_character_types = params[:character_types]
-	   	@characters = @characters.where(type: @selected_character_types)
-	   end
-
+	  @q = Character.includes(:logs).order(:created_at).search(params[:q])
+	  @characters = @q.result.paginate(:page => params[:page])
 	end
 	
 	def show

@@ -9,6 +9,8 @@
 }
 .character-list {
 	.character-jp {
+		width: 100px;
+		max-width: 100px;
 		img {
 			height: 15px;
 		}
@@ -28,18 +30,11 @@
 			background-color: $vocabulary-color;
 		}
 	}
-	// tr.radical {
-	// 	&:nth-child(odd), &:hover {	
-	// 	}
-	// }
-	// tr.kanji {
-	// 	&:nth-child(odd), &:hover {	
-	// 		background-color: #ffb9df;
-	// 	}
-	// }
-	// tr.vocabulary {
-	// 	&:nth-child(odd), &:hover {	
-	// 	background-color: #f5cfff;
-	// 	}
-	// }
+	.description {
+		width: 300px;
+		white-space: nowrap;
+	    text-overflow: ellipsis;
+	    overflow: hidden;
+	    max-width: 300px;
+	}
 }

@@ -2,27 +2,38 @@
 %table.table.table-hover.character-list
   %thead
     %tr
-      %th character
-      %th meaning
-      %th type
-      %th level
-      %th logs
-      %th first occurrence
+      %th 
+        = sort_link(@q, :character)
+      %th.description
+        = sort_link(@q, :meaning)
+      %th.hidden-xs
+        = sort_link(@q, :type)
+      %th.hidden-xs
+        / ransacker produces bad SQL, duplicate results etc
+        / = sort_link(@q, :current_log_srs, 'srs level')
+        srs level
+      %th.hidden-xs
+        = sort_link(@q, :logs_count, 'logs')
+      %th.hidden-xs.hidden-sm.hidden-md
+        = sort_link(@q, :created_at, 'first occurrence')
+      %th.hidden-xs.hidden-sm
+        = sort_link(@q, :level, 'level')
       %th
   %tbody
     - @characters.each do |character|
-      %tr{:class => character.type.downcase}
+      %tr{:class => character.type.downcase, 'data-click' => '.show'}
         %td.character-jp
           - if character.character.nil?
             %img.character-image{:src => "#{character.image}"}/
           - else
             = character.character
-        %td= character.meaning
-        %td
+        %td{class: 'description'}= character.meaning
+        %td.hidden-xs
           .marker{class: character.type.downcase}
           = character.type
-        %td= character.logs.last.srs
-        %td= character.logs.size
-        %td= character.created_at.strftime(Rails.application.config.date_time_format_long)
-        %td= link_to 'Show', character_path(character)
-= will_paginate @characters, :renderer => BootstrapPagination::Rails
+        %td.hidden-xs= character.current_log.srs
+        %td.hidden-xs= character.logs_count
+        %td.hidden-xs.hidden-sm.hidden-md= character.created_at.strftime(Rails.application.config.date_time_format_long)
+        %td.hidden-xs.hidden-sm= character.level
+        %td= link_to 'Show', character_path(character), {class: 'show'}
+= will_paginate @characters, :renderer => BootstrapPagination::Rails, :outer_window   => 0, :inner_window   => 2

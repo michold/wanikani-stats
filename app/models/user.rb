@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+	scope :current_level, -> { Character.where(level: self.order(level: :desc).first[:level]) }
+
 	def self.current_user
 		first || new
 	end
