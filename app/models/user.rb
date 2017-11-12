@@ -4,6 +4,7 @@ class User < ApplicationRecord
 	def self.current_user
 		first || new
 	end
+
 	def self.update_attributes
 		body = WanikaniApi.new.get("level-progression")
 		user = body['requested_information'].merge(body['user_information'])
