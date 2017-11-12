@@ -99,7 +99,7 @@ class Log < ActiveRecord::Base
 		def get_logs_to_save(items, characterClass)
 			items.map do |item| 
 				log = get_log(item)
-				next unless log # is this needed?
+				next unless log # happens when downloading a character not yet learned :(
 
 				create_new_log = false
 
@@ -124,8 +124,7 @@ class Log < ActiveRecord::Base
 
 		def get_log(item)
 				log = item.delete('user_specific')
-				log 'wtf? tatamapasata' unless log
-				return unless log # is this needed?
+				return unless log # happens when downloading a character not yet learned :(
 				clean_log(log)
 		end
 
